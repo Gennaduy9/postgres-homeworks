@@ -1,9 +1,11 @@
 """Скрипт для заполнения данными таблиц в БД Postgres."""
 
+from config import host, user, password, db_name
+from pathlib import Path, PureWindowsPath
+
 import psycopg2
 import csv
 
-from config import host, user, password, db_name
 
 def connect_to(csv_file, table_name):
     try:
@@ -34,8 +36,14 @@ def connect_to(csv_file, table_name):
 
             print("[INFO] Запрос выполнен успешно")
 
-            with open(f"C:\\Users\\Геннадий Михайлович\\PycharmProjects\\postgres-homeworks\\homework-1"
-              f"\\north_data\\{csv_file}", "r", encoding="windows-1251") as file:
+            # Создаем объект Path
+            filename = Path(f"C:\\Users\\Геннадий Михайлович\\PycharmProjects\\"
+                            f"postgres-homeworks\\homework-1\\north_data\\{csv_file}")
+
+            # Получаем абсолютный путь к файлу
+            abs_path = filename.resolve()
+
+            with open(abs_path, "r", encoding="windows-1251") as file:
                 reader = csv.reader(file)
                 next(reader) # Пропускаем заголовки столбцов
 
